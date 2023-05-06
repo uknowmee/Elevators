@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Form from "./Form"
+import BuildingForm from "./BuildingForm"
 import Building from "./Building"
 import Navigation from "./Navigation";
 
@@ -35,7 +35,7 @@ export default function Home() {
     <main>
       {showForm ? (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Form onSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
+          <BuildingForm onSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
         </div>
       ) : (
         <div style={{ display: "flex", justifyContent: "center" }}>

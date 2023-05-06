@@ -9,12 +9,14 @@ const Navigation = ({ onReset, onStep }: NavigationProps) => {
 
     function step() {
         console.log("Step");
-        // TODO: GET /api/step
+        // TODO: PUT /api/step
+        // TODO: GET /api/state
         onStep(666);
     }
 
     function reset() {
         console.log("Reset");
+        // TODO: DELETE /api/clear
         onReset();
     }
 

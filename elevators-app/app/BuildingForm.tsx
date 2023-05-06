@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "../styles/Form.css"
 import { init } from "next/dist/compiled/@vercel/og/satori";
 
-type FormProps = {
+type BuildingFormProps = {
     onSubmit: (numOfFloors: number, numOfElevators: number) => void;
     initFloors: number;
     initElevators: number;
 };
 
-const Form = ({ onSubmit, initElevators, initFloors}: FormProps) => {
+const BuildingForm = ({ onSubmit, initElevators, initFloors}: BuildingFormProps) => {
     const maxFloors: number = 15;
     const maxElevators: number = 16;
 
@@ -55,4 +55,4 @@ const Form = ({ onSubmit, initElevators, initFloors}: FormProps) => {
     );
 };
 
-export default Form;
+export default BuildingForm;
