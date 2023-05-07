@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Form.css"
-import { init } from "next/dist/compiled/@vercel/og/satori";
+import "../styles/BuildingForm.css"
 
 type BuildingFormProps = {
     onSubmit: (numOfFloors: number, numOfElevators: number) => void;
@@ -9,7 +8,7 @@ type BuildingFormProps = {
 };
 
 const BuildingForm = ({ onSubmit, initElevators, initFloors}: BuildingFormProps) => {
-    const maxFloors: number = 15;
+    const maxFloors: number = 17;
     const maxElevators: number = 16;
 
     const [numOfFloors, setNumOfFloors] = useState(initFloors);

@@ -5,13 +5,14 @@ import ElevatorFloor from "./ElevatorFloor";
 
 type ElevatorShaftProps = {
   numOfFloors: number;
+  key: number;
 };
 
-function ElevatorShaft({ numOfFloors }: ElevatorShaftProps) {
+function ElevatorShaft({ numOfFloors, key }: ElevatorShaftProps) {
   const [currentFloor, setCurrentFloor] = useState(0);
 
   const elevatorFloors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} />
+    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} names={["test", "imie"]}/>
   )).reverse();
 
   function top() {

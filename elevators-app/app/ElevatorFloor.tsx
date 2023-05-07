@@ -1,23 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "../styles/ElevatorFloor.css";
 
 type ElevatorFloorProps = {
-  number: number;
   isCurrent: boolean;
+  number: number;
+  names: string[];
 };
 
-const ElevatorFloor = ({ number, isCurrent }: ElevatorFloorProps) => {
+const ElevatorFloor = ({ number, isCurrent, names }: ElevatorFloorProps) => {
   const color = isCurrent ? "green" : "#ddd";
-  return (
-    <div
-      style={{
-        border: "1px dotted gray",
-        width: "40px",
-        height: "40px",
-        backgroundColor: color,
-      }}
-    >
-      <div style={{ fontSize: "24px", fontWeight: "bold" }}>{number}</div>
-    </div>
-  );
+
+  const [showNames, setShowNames] = useState(false);
+  const [showingNames, setShowingNames] = useState(false);
+
+  useEffect(() => {
+    if (showNames) {
+      setShowingNames(true);
+      setTimeout(() => {
+        setShowingNames(false);
+        setShowNames(false);
+      }, 2500);
+    }
+  }, [showNames]);
+
+  const toggleShowNames = () => {
+    setShowNames(!showNames);
+  };
+
+  return !isCurrent
+    ? (
+      <div className="elevatorFloor" style={{ backgroundColor: color }}>
+        <div style={{ fontSize: "24px", fontWeight: "bold" }}>{number}</div>
+      </div>
+    )
+    : (
+      <div className="elevatorFloor" onClick={toggleShowNames}>
+        <div className={`${names.length > 0 ? "has-names" : "no-names"}`}>{number}</div>
+        <div
+          className={`elevatorFloor-names ${showingNames ? "visible" : ""}`}
+          onAnimationEnd={() => setShowingNames(false)}
+        >
+          <div className="elevatorFloor-names-inner">
+            {names.map((name, index) => (
+              <div key={index} className="name-item">
+                {index + 1}. {name}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
 };
+
 export default ElevatorFloor;

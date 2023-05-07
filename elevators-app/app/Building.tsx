@@ -7,24 +7,23 @@ type BuildingProps = {
 };
 
 const Building = ({ numOfFloors, numOfElevators }: BuildingProps) => {
-    const elevatorShafts = [];
-    const floors = [];
 
-    for (let i = 0; i < numOfElevators; i++) {
-        elevatorShafts.push(<ElevatorShaft key={i} numOfFloors={numOfFloors} />);
-    }
+    const elevatorShafts = Array.from({ length: numOfElevators }, (_, index) => (
+        <ElevatorShaft key={index} numOfFloors={numOfFloors} />
+    ));
 
-    for (let i = 0; i < numOfFloors + 1; i++) {
-        floors.push(<Floor key={i} number={i} />);
-    }
-    floors.reverse();
+    const floors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
+        <Floor key={index} number={index} names={["test", "imie", "asdasd", "asdasd"]} />
+    )).reverse();
 
     return (
-        <div style={{ display: "flex", gap: "20px", height: "100vh", overflow: "hidden", flexDirection: "row", margin: "20px"}}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", height: "100vh", overflow: "hidden", flexDirection: "row", margin: "3px" }}>
+            <div style={{ width: "100px"}}></div>
+            <div style={{ display: "flex", flexDirection: "column", paddingRight: "30px"}}>
                 {floors}
             </div>
             {elevatorShafts}
+            <div style={{ width: "100px"}}></div>
         </div>
     );
 };

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import BuildingForm from "./BuildingForm"
 import Building from "./Building"
-import Navigation from "./Navigation";
+import Controls from "./Controls";
 
 
 export default function Home() {
@@ -22,13 +22,18 @@ export default function Home() {
   };
 
   const resetForm = () => {
+    // TODO: DELETE /api/clear
+    console.log("Reset");
+
     setShowForm(true);
     setNumOfFloors(initFloors);
     setNumOfElevators(initElevators);
   };
 
-  const step = (value: number) => {
-    console.log(value);
+  const step = () => {
+    // TODO: PUT /api/step
+    // TODO: GET /api/state
+    console.log("Step");
   };
 
   return (
@@ -38,9 +43,9 @@ export default function Home() {
           <BuildingForm onSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
         </div>
       ) : (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px"}}>
           <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} />
-          <Navigation onReset={resetForm} onStep={step} />
+          <Controls onReset={resetForm} onStep={step} />
         </div>
       )}
     </main>

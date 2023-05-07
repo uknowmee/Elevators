@@ -1,0 +1,80 @@
+.elevatorFloor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dotted gray;
+    width: 40px;
+    height: 40px;
+
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.elevatorFloor:hover {
+    background-color: rgb(187, 186, 186);
+}
+
+.elevatorFloor-number {
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.has-names {
+    font-size: 35px;
+    font-weight: bolder;
+    color: rgb(34, 130, 29);
+}
+
+.no-names {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(65, 203, 58);
+}
+
+.elevatorFloor-names {
+    position: absolute;
+    width: 25vh;
+    height: 25vh;
+    background-color: rgba(160, 151, 151, 0.9);
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.elevatorFloor-names-inner {
+    color: #fff;
+}
+
+.name-item {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
