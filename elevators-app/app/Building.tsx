@@ -9,7 +9,7 @@ type BuildingProps = {
 const Building = ({ numOfFloors, numOfElevators }: BuildingProps) => {
 
     const elevatorShafts = Array.from({ length: numOfElevators }, (_, index) => (
-        <ElevatorShaft key={index} numOfFloors={numOfFloors} />
+        <ElevatorShaft key={index} numOfFloors={numOfFloors} id={index} />
     ));
 
     const floors = Array.from({ length: numOfFloors + 1 }, (_, index) => (

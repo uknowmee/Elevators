@@ -5,14 +5,14 @@ import ElevatorFloor from "./ElevatorFloor";
 
 type ElevatorShaftProps = {
   numOfFloors: number;
-  key: number;
+  id: number;
 };
 
-function ElevatorShaft({ numOfFloors, key }: ElevatorShaftProps) {
+function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
   const [currentFloor, setCurrentFloor] = useState(0);
 
   const elevatorFloors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} names={["test", "imie"]}/>
+    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} getNames={tmp}/>
   )).reverse();
 
   function top() {
@@ -25,6 +25,10 @@ function ElevatorShaft({ numOfFloors, key }: ElevatorShaftProps) {
     if (currentFloor > 0) {
       setCurrentFloor(currentFloor - 1);
     }
+  }
+
+  function tmp(): string[] {
+    return id % 2 == 0 ? ["test", "imie"] : [];
   }
 
   return (

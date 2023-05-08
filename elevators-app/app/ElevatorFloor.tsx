@@ -4,10 +4,10 @@ import "../styles/ElevatorFloor.css";
 type ElevatorFloorProps = {
   isCurrent: boolean;
   number: number;
-  names: string[];
+  getNames: () => string[];
 };
 
-const ElevatorFloor = ({ number, isCurrent, names }: ElevatorFloorProps) => {
+const ElevatorFloor = ({ number, isCurrent, getNames }: ElevatorFloorProps) => {
   const color = isCurrent ? "green" : "#ddd";
 
   const [showNames, setShowNames] = useState(false);
@@ -35,13 +35,13 @@ const ElevatorFloor = ({ number, isCurrent, names }: ElevatorFloorProps) => {
     )
     : (
       <div className="elevatorFloor" onClick={toggleShowNames}>
-        <div className={`${names.length > 0 ? "has-names" : "no-names"}`}>{number}</div>
+        <div className={`${getNames().length > 0 ? "has-names" : "no-names"}`}>{number}</div>
         <div
           className={`elevatorFloor-names ${showingNames ? "visible" : ""}`}
           onAnimationEnd={() => setShowingNames(false)}
         >
           <div className="elevatorFloor-names-inner">
-            {names.map((name, index) => (
+            {getNames().map((name, index) => (
               <div key={index} className="name-item">
                 {index + 1}. {name}
               </div>
