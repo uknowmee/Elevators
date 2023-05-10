@@ -1,4 +1,4 @@
-package com.uknowme.controller;
+package com.uknowme.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/smoke")
 @AllArgsConstructor
-public class Smoke {
+public class SmokeController {
 
     private record SmokeResponse(String message) {
     }
