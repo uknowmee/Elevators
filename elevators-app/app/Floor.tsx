@@ -16,7 +16,7 @@ const Floor = ({ number, names }: FloorProps) => {
             setTimeout(() => {
                 setShowingNames(false);
                 setShowNames(false);
-            }, 2500);
+            }, 2000);
         }
     }, [showNames]);
 

@@ -11,6 +11,7 @@ export default function Home() {
   const initElevators: number = 3;
 
   const [showForm, setShowForm] = useState(true);
+  const [showControls, setshowControls] = useState(true);
   const [numOfFloors, setNumOfFloors] = useState(initFloors);
   const [numOfElevators, setNumOfElevators] = useState(initElevators);
 
@@ -40,12 +41,12 @@ export default function Home() {
     <main>
       {showForm ? (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <BuildingForm onSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
+          <BuildingForm handleSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
         </div>
       ) : (
         <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px"}}>
-          <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} />
-          <Controls onReset={resetForm} onStep={step} />
+          <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} setShowControls={setshowControls}/>
+          <Controls onReset={resetForm} onStep={step} renderButtons={showControls}/>
         </div>
       )}
     </main>

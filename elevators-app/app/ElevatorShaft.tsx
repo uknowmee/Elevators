@@ -12,7 +12,7 @@ function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
   const [currentFloor, setCurrentFloor] = useState(0);
 
   const elevatorFloors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} getNames={tmp}/>
+    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} names={tmp()}/>
   )).reverse();
 
   function top() {

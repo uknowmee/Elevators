@@ -4,10 +4,10 @@ import "../styles/ElevatorFloor.css";
 type ElevatorFloorProps = {
   isCurrent: boolean;
   number: number;
-  getNames: () => string[];
+  names: string[];
 };
 
-const ElevatorFloor = ({ number, isCurrent, getNames }: ElevatorFloorProps) => {
+function ElevatorFloor({ number, isCurrent, names }: ElevatorFloorProps) {
   const color = isCurrent ? "green" : "#ddd";
 
   const [showNames, setShowNames] = useState(false);
@@ -19,7 +19,7 @@ const ElevatorFloor = ({ number, isCurrent, getNames }: ElevatorFloorProps) => {
       setTimeout(() => {
         setShowingNames(false);
         setShowNames(false);
-      }, 2500);
+      }, 2000);
     }
   }, [showNames]);
 
@@ -35,13 +35,13 @@ const ElevatorFloor = ({ number, isCurrent, getNames }: ElevatorFloorProps) => {
     )
     : (
       <div className="elevatorFloor" onClick={toggleShowNames}>
-        <div className={`${getNames().length > 0 ? "has-names" : "no-names"}`}>{number}</div>
+        <div className={`${names.length > 0 ? "has-names" : "no-names"}`}>{number}</div>
         <div
           className={`elevatorFloor-names ${showingNames ? "visible" : ""}`}
           onAnimationEnd={() => setShowingNames(false)}
         >
           <div className="elevatorFloor-names-inner">
-            {getNames().map((name, index) => (
+            {names.map((name, index) => (
               <div key={index} className="name-item">
                 {index + 1}. {name}
               </div>

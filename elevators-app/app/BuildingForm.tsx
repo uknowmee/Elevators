@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import "../styles/BuildingForm.css"
 
 type BuildingFormProps = {
-    onSubmit: (numOfFloors: number, numOfElevators: number) => void;
+    handleSubmit: (numOfFloors: number, numOfElevators: number) => void;
     initFloors: number;
     initElevators: number;
 };
 
-const BuildingForm = ({ onSubmit, initElevators, initFloors}: BuildingFormProps) => {
+function BuildingForm({ handleSubmit, initElevators, initFloors}: BuildingFormProps){
     const maxFloors: number = 17;
     const maxElevators: number = 16;
 
     const [numOfFloors, setNumOfFloors] = useState(initFloors);
     const [numOfElevators, setNumOfElevators] = useState(initElevators);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onSubmit(numOfFloors, numOfElevators);
+        handleSubmit(numOfFloors, numOfElevators);
     };
 
     return (
         <div className="form-container">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
                 <label>
                     Number of floors:
                     <input
