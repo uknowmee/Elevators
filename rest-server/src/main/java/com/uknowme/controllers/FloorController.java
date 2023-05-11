@@ -11,12 +11,12 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("api/v1/floor")
+@RequestMapping("api/v1")
 @AllArgsConstructor
 public class FloorController {
     private final IFloorService floorService;
 
-    @GetMapping("/get-floors/{buildingId}")
+    @GetMapping("/buildings/{buildingId}/floors")
     public List<FloorDto> getFloors(@PathVariable int buildingId) {
         List<Floor> floors = floorService.getBuildingFloors(buildingId);
         return DomainToDtoMapper.mapFloorsToDto(floors);

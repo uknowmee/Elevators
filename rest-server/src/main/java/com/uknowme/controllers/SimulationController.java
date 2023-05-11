@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("api/v1/simulation")
+@RequestMapping("api/v1/simulations")
 @AllArgsConstructor
 public class SimulationController {
 
@@ -30,7 +30,7 @@ public class SimulationController {
         return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());
     }
 
-    @PutMapping("/make-step/{buildingId}")
+    @PutMapping("/{buildingId}/step")
     public BuildingDetailsDto makeSimulationStep(@PathVariable int buildingId) {
         Simulation simulation = simulationService.makeSimulationStep(buildingId);
         return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService implements IPersonService {
     @Override
-    public Person createPerson(int startFloorNumber, int desiredFloorNumber, String name, int buildingId, int floorId) {
+    public Person createPerson(int startFloorNumber, int desiredFloorNumber, String name, int buildingId) {
         return null;
     }
 }
