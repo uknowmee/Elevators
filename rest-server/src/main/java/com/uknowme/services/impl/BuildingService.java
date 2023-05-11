@@ -8,8 +8,4 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class BuildingService implements IBuildingService {
-    @Override
-    public Building getBuildingDetails(int buildingId) {
-        return null;
-    }
 }

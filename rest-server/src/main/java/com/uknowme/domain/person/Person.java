@@ -6,8 +6,6 @@ import com.uknowme.domain.Floor;
 import com.uknowme.dtos.PersonDto;
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
 public class Person {
     @Id
