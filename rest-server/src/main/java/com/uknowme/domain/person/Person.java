@@ -1,9 +1,8 @@
 package com.uknowme.domain.person;
 
 import com.uknowme.domain.Building;
-import com.uknowme.domain.Elevator;
+import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.Floor;
-import com.uknowme.dtos.PersonDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -50,10 +49,6 @@ public class Person {
         this.direction = direction;
     }
 
-    public PersonDto toDto() {
-        return new PersonDto(this.name, this.direction, this.desiredFloorNumber);
-    }
-
     public Direction getDirection() {
         return direction;
     }
@@ -62,11 +57,11 @@ public class Person {
         this.direction = direction;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

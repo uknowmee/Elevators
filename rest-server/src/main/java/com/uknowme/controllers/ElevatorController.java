@@ -1,6 +1,6 @@
 package com.uknowme.controllers;
 
-import com.uknowme.domain.Elevator;
+import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.dtos.ElevatorDto;
 import com.uknowme.mappers.DomainToDtoMapper;
 import com.uknowme.services.IElevatorService;

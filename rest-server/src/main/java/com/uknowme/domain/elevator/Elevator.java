@@ -1,8 +1,7 @@
-package com.uknowme.domain;
+package com.uknowme.domain.elevator;
 
+import com.uknowme.domain.Building;
 import com.uknowme.domain.person.Person;
-import com.uknowme.dtos.ElevatorDto;
-import com.uknowme.dtos.PersonDto;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -10,38 +9,40 @@ import java.util.List;
 @Entity
 public class Elevator {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int currentFloor;
     private int destinationFloor;
+    private boolean isOpened;
     @ManyToOne
     private Building building;
     @OneToMany(mappedBy = "elevator")
     private List<Person> people;
+    @OneToMany(mappedBy = "elevator")
+    private List<ElevatorDestination> elevatorDestinations;
 
     public Elevator() {
     }
 
-    public Elevator(int id, int currentFloor, int destinationFloor, Building building, List<Person> people) {
+    public Elevator(int id, int currentFloor, int destinationFloor, boolean isOpened, Building building, List<Person> people) {
         this.id = id;
         this.currentFloor = currentFloor;
         this.destinationFloor = destinationFloor;
+        this.isOpened = isOpened;
         this.building = building;
         this.people = people;
     }
 
-    public ElevatorDto toDto(List<PersonDto> people) {
-        return new ElevatorDto(this.currentFloor, people);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public void setOpened(boolean opened) {
+        isOpened = opened;
     }
 
     public int getCurrentFloor() {

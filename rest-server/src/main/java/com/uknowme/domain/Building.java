@@ -1,5 +1,6 @@
 package com.uknowme.domain;
 
+import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.person.Person;
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
 package com.uknowme.services;
 
-import com.uknowme.domain.Elevator;
+import com.uknowme.domain.elevator.Elevator;
 
 import java.util.List;
 

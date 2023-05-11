@@ -1,7 +1,7 @@
 package com.uknowme.mappers;
 
 import com.uknowme.domain.Building;
-import com.uknowme.domain.Elevator;
+import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.Floor;
 import com.uknowme.domain.person.Person;
 import com.uknowme.dtos.BuildingDetailsDto;
@@ -27,6 +27,7 @@ public class DomainToDtoMapper {
     public static ElevatorDto mapElevatorToDto(Elevator elevator) {
         return new ElevatorDto(
                 elevator.getCurrentFloor(),
+                elevator.isOpened(),
                 mapPeopleToDto(elevator.getPeople())
         );
     }

@@ -10,9 +10,7 @@ import java.util.List;
 @Entity
 public class Floor {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int floorNumber;
     @ManyToOne

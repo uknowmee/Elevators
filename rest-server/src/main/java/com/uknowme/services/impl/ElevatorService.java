@@ -1,6 +1,6 @@
 package com.uknowme.services.impl;
 
-import com.uknowme.domain.Elevator;
+import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.services.IElevatorService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
