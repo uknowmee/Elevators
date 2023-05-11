@@ -1,18 +1,34 @@
 package com.uknowme.domain.person;
 
+import com.uknowme.domain.Building;
+import com.uknowme.domain.Elevator;
+import com.uknowme.domain.Floor;
 import com.uknowme.dtos.PersonDto;
+import jakarta.persistence.*;
 
+import java.util.Objects;
+
+@Entity
 public class Person {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "SERIAL")
+    private Integer id;
     private String name;
     private int startFloorNumber;
     private int desiredFloorNumber;
     private int currentFloorNumber;
+    @Enumerated(EnumType.STRING)
     private Direction direction;
 
-    private Integer elevatorId;
-    private Integer floorId;
-    private int buildingId;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "elevator_id", nullable = true)
+    private Elevator elevator;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "floor_id", nullable = true)
+    private Floor floor;
+    @ManyToOne
+    private Building building;
 
     public Person() {
     }
@@ -22,17 +38,17 @@ public class Person {
             String name,
             int startFloorNumber,
             int desiredFloorNumber,
-            int buildingId,
-            int floorId,
-            Direction direction
-    ) {
+            Building building,
+            Direction direction,
+            Elevator elevator, Floor floor) {
         this.id = id;
         this.name = name;
         this.startFloorNumber = startFloorNumber;
         this.desiredFloorNumber = desiredFloorNumber;
         this.currentFloorNumber = startFloorNumber;
-        this.buildingId = buildingId;
-        this.floorId = floorId;
+        this.building = building;
+        this.elevator = elevator;
+        this.floor = floor;
         this.direction = direction;
     }
 
@@ -88,27 +104,35 @@ public class Person {
         this.currentFloorNumber = currentFloorNumber;
     }
 
-    public Integer getElevatorId() {
-        return elevatorId;
+    public Elevator getElevator() {
+        return elevator;
     }
 
-    public void setElevatorId(Integer elevatorId) {
-        this.elevatorId = elevatorId;
+    public void setElevator(Elevator elevator) {
+        this.elevator = elevator;
     }
 
-    public Integer getFloorId() {
-        return floorId;
+    public Floor getFloor() {
+        return floor;
     }
 
-    public void setFloorId(Integer floorId) {
-        this.floorId = floorId;
+    public void setFloor(Floor floor) {
+        this.floor = floor;
     }
 
-    public int getBuildingId() {
-        return buildingId;
+    public Building getBuilding() {
+        return building;
     }
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Building getBuildingId() {
+        return building;
+    }
+
+    public void setBuildingId(Building building) {
+        this.building = building;
     }
 }

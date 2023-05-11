@@ -1,11 +1,8 @@
 package com.uknowme.controllers;
 
-import com.uknowme.domain.Building;
 import com.uknowme.domain.Simulation;
-import com.uknowme.dtos.BuildingDto;
-import com.uknowme.dtos.SimulationDto;
+import com.uknowme.dtos.BuildingDetailsDto;
 import com.uknowme.mappers.DomainToDtoMapper;
-import com.uknowme.services.IBuildingService;
 import com.uknowme.services.ISimulationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,35 +14,31 @@ import org.springframework.web.bind.annotation.*;
 public class SimulationController {
 
     private final ISimulationService simulationService;
-    private final IBuildingService buildingService;
 
     @PostMapping
-    public BuildingDto createSimulation(
+    public BuildingDetailsDto createSimulation(
             @RequestBody int numOfFloors,
             @RequestBody int numOfElevators
     ) {
         Simulation simulation = simulationService.createSimulation(numOfFloors, numOfElevators);
-        Building building = buildingService.getSimulationBuilding(simulation.getBuildingId());
-
-        return DomainToDtoMapper.mapBuildingToDto(building);
+        return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());
     }
 
     @GetMapping("/{buildingId}")
-    public SimulationDto getSimulationStatus(@PathVariable int buildingId) {
-//        return simulationService.getSimulation();
-        return null;
+    public BuildingDetailsDto getSimulationStatus(@PathVariable int buildingId) {
+        Simulation simulation = simulationService.getSimulation(buildingId);
+        return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());
     }
 
     @PutMapping("/make-step/{buildingId}")
-    public SimulationDto makeSimulationStep(@PathVariable int buildingId) {
-//        simulationService.makeSimulationStep();
-//        return simulationService.getSimulation();
-        return null;
+    public BuildingDetailsDto makeSimulationStep(@PathVariable int buildingId) {
+        Simulation simulation = simulationService.makeSimulationStep(buildingId);
+        return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());
 
     }
 
     @DeleteMapping("/{buildingId}")
     public void stopSimulation(@PathVariable int buildingId) {
-//        simulationService.stopSimulation();
+        simulationService.stopSimulation(buildingId);
     }
 }

@@ -3,50 +3,53 @@ package com.uknowme.mappers;
 import com.uknowme.domain.Building;
 import com.uknowme.domain.Elevator;
 import com.uknowme.domain.Floor;
-import com.uknowme.domain.Simulation;
 import com.uknowme.domain.person.Person;
-import com.uknowme.dtos.*;
-import org.springframework.data.util.StreamUtils;
+import com.uknowme.dtos.BuildingDetailsDto;
+import com.uknowme.dtos.ElevatorDto;
+import com.uknowme.dtos.FloorDto;
+import com.uknowme.dtos.PersonDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DomainToDtoMapper {
-    public static List<ElevatorDto> mapElevatorsToDtoWithPeople(
-            List<Elevator> elevators,
-            List<List<Person>> elevatorsPeople
-    ) {
-        return StreamUtils
-                .zip(
-                        elevators.stream(),
-                        elevatorsPeople.stream(),
-                        (elevator, people) -> elevator.toDto(people.stream().map(Person::toDto).toList())
-                )
-                .collect(Collectors.toList());
+    public static List<ElevatorDto> mapElevatorsToDto(List<Elevator> elevators) {
+        return elevators.stream().map(DomainToDtoMapper::mapElevatorToDto).toList();
     }
 
-    public static List<FloorDto> mapFloorsToDtoWithPeople(
-            List<Floor> floors,
-            List<List<Person>> people
-    ) {
-        return StreamUtils
-                .zip(
-                        floors.stream(),
-                        people.stream(),
-                        (floor, floorPeople) -> floor.toDto(floorPeople.stream().map(Person::toDto).toList())
-                )
-                .collect(Collectors.toList());
+    public static List<FloorDto> mapFloorsToDto(List<Floor> floors) {
+        return floors.stream().map(DomainToDtoMapper::mapFloorToDto).toList();
+    }
+
+    public static List<PersonDto> mapPeopleToDto(List<Person> people) {
+        return people.stream().map(DomainToDtoMapper::mapPersonToDto).toList();
+    }
+
+    public static ElevatorDto mapElevatorToDto(Elevator elevator) {
+        return new ElevatorDto(
+                elevator.getCurrentFloor(),
+                mapPeopleToDto(elevator.getPeople())
+        );
+    }
+
+    public static FloorDto mapFloorToDto(Floor floor) {
+        return new FloorDto(
+                floor.getFloorNumber(),
+                mapPeopleToDto(floor.getPeople())
+        );
     }
 
     public static PersonDto mapPersonToDto(Person person) {
-        return person.toDto();
+        return new PersonDto(
+                person.getName(),
+                person.getDirection(),
+                person.getDesiredFloorNumber()
+        );
     }
 
-    public static SimulationDto mapSimulationToDto(Simulation simulation) {
-        return simulation.toDto();
-    }
-
-    public static BuildingDto mapBuildingToDto(Building building) {
-        return building.toDto();
+    public static BuildingDetailsDto mapBuildingToDto(Building building) {
+        return new BuildingDetailsDto(
+                mapElevatorsToDto(building.getElevators()),
+                mapFloorsToDto(building.getFloors())
+        );
     }
 }

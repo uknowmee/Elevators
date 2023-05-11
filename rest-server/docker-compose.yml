@@ -1,0 +1,23 @@
+services:
+  db:
+    container_name: postgres-container
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: uknowme-elevators
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - 32768:5432
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:

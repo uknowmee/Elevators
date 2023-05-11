@@ -1,41 +1,36 @@
 package com.uknowme.domain;
 
-import com.uknowme.dtos.SimulationDto;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
+@Entity
 public class Simulation {
-    private int id;
-    private int buildingId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "SERIAL")
+    private Long id;
     private Date startTime;
+    private Date endTime;
+    @OneToOne(mappedBy="simulation")
+    private Building building;
 
     public Simulation() {
     }
 
-    public Simulation(int id, int buildingId, Date startTime) {
+    public Simulation(Long id, Date startTime, Date endTime, Building building) {
         this.id = id;
-        this.buildingId = buildingId;
         this.startTime = startTime;
+        this.endTime = endTime;
+        this.building = building;
     }
 
-    public SimulationDto toDto(){
-        return new SimulationDto();
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
     }
 
     public Date getStartTime() {
@@ -44,5 +39,21 @@ public class Simulation {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }

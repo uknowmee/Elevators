@@ -1,23 +1,34 @@
 package com.uknowme.domain;
 
+import com.uknowme.domain.person.Person;
 import com.uknowme.dtos.FloorDto;
 import com.uknowme.dtos.PersonDto;
+import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
+@Entity
 public class Floor {
-    private int id;
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Integer id;
     private int floorNumber;
-
-    private int buildingId;
+    @ManyToOne
+    private Building building;
+    @OneToMany(mappedBy = "floor")
+    private List<Person> people;
 
     public Floor() {
     }
 
-    public Floor(int id, int floorNumber, int buildingId) {
+    public Floor(int id, int floorNumber, Building building, List<Person> people) {
         this.id = id;
         this.floorNumber = floorNumber;
-        this.buildingId = buildingId;
+        this.building = building;
+        this.people = people;
     }
 
     public FloorDto toDto(List<PersonDto> people) {
@@ -40,11 +51,19 @@ public class Floor {
         this.floorNumber = floorNumber;
     }
 
-    public int getBuildingId() {
-        return buildingId;
+    public Building getBuilding() {
+        return building;
     }
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public List<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(List<Person> people) {
+        this.people = people;
     }
 }

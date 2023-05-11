@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BuildingService implements IBuildingService {
     @Override
-    public Building getSimulationBuilding(int buildingId) {
+    public Building getBuildingDetails(int buildingId) {
         return null;
     }
 }
