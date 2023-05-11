@@ -1,4 +1,4 @@
-package com.uknowme.repositories;
+package com.uknowme.repositories.elevator;
 
 import com.uknowme.domain.elevator.Elevator;
 import org.springframework.data.jpa.repository.JpaRepository;

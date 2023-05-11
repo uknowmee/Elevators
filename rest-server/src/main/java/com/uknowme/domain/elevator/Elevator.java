@@ -24,15 +24,6 @@ public class Elevator {
     public Elevator() {
     }
 
-    public Elevator(int id, int currentFloor, int destinationFloor, boolean isOpened, Building building, List<Person> people) {
-        this.id = id;
-        this.currentFloor = currentFloor;
-        this.destinationFloor = destinationFloor;
-        this.isOpened = isOpened;
-        this.building = building;
-        this.people = people;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -75,5 +66,13 @@ public class Elevator {
 
     public void setPeople(List<Person> people) {
         this.people = people;
+    }
+
+    public List<ElevatorDestination> getElevatorDestinations() {
+        return elevatorDestinations;
+    }
+
+    public void setElevatorDestinations(List<ElevatorDestination> elevatorDestinations) {
+        this.elevatorDestinations = elevatorDestinations;
     }
 }

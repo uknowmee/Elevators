@@ -1,15 +1,14 @@
 package com.uknowme.domain.person;
 
 import com.uknowme.domain.Building;
-import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.Floor;
+import com.uknowme.domain.elevator.Elevator;
 import jakarta.persistence.*;
 
 @Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "SERIAL")
     private Integer id;
     private String name;
     private int startFloorNumber;
@@ -28,25 +27,6 @@ public class Person {
     private Building building;
 
     public Person() {
-    }
-
-    public Person(
-            int id,
-            String name,
-            int startFloorNumber,
-            int desiredFloorNumber,
-            Building building,
-            Direction direction,
-            Elevator elevator, Floor floor) {
-        this.id = id;
-        this.name = name;
-        this.startFloorNumber = startFloorNumber;
-        this.desiredFloorNumber = desiredFloorNumber;
-        this.currentFloorNumber = startFloorNumber;
-        this.building = building;
-        this.elevator = elevator;
-        this.floor = floor;
-        this.direction = direction;
     }
 
     public Direction getDirection() {

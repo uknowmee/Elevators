@@ -8,21 +8,13 @@ import java.util.Date;
 public class Simulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "SERIAL")
     private Long id;
     private Date startTime;
     private Date endTime;
-    @OneToOne(mappedBy="simulation")
+    @OneToOne(mappedBy="simulation", cascade=CascadeType.ALL)
     private Building building;
 
     public Simulation() {
-    }
-
-    public Simulation(Long id, Date startTime, Date endTime, Building building) {
-        this.id = id;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.building = building;
     }
 
     public Long getId() {
@@ -55,5 +47,6 @@ public class Simulation {
 
     public void setBuilding(Building building) {
         this.building = building;
+        building.setSimulation(this);
     }
 }

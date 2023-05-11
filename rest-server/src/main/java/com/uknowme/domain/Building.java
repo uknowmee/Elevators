@@ -10,7 +10,6 @@ import java.util.List;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "SERIAL")
     private Integer id;
     private int numOfFloors;
     private int numOfElevators;
@@ -24,16 +23,6 @@ public class Building {
     private List<Person> people;
 
     public Building() {
-    }
-
-    public Building(int id, int numOfFloors, int numOfElevators, Simulation simulation, List<Elevator> elevators, List<Floor> floors, List<Person> people) {
-        this.id = id;
-        this.numOfFloors = numOfFloors;
-        this.numOfElevators = numOfElevators;
-        this.simulation = simulation;
-        this.elevators = elevators;
-        this.floors = floors;
-        this.people = people;
     }
 
     public Integer getId() {
@@ -82,6 +71,7 @@ public class Building {
 
     public void setFloors(List<Floor> floors) {
         this.floors = floors;
+        floors.forEach(floor -> floor.setBuilding(this));
     }
 
     public List<Person> getPeople() {
@@ -90,5 +80,6 @@ public class Building {
 
     public void setPeople(List<Person> people) {
         this.people = people;
+        people.forEach(person -> person.setBuilding(this));
     }
 }

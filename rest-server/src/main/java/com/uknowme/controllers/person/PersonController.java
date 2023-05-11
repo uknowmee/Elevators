@@ -1,9 +1,8 @@
-package com.uknowme.controllers;
+package com.uknowme.controllers.person;
 
 import com.uknowme.domain.person.Person;
 import com.uknowme.dtos.PersonDto;
 import com.uknowme.mappers.DomainToDtoMapper;
-import com.uknowme.services.IFloorService;
 import com.uknowme.services.IPersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +16,15 @@ public class PersonController {
 
     @PostMapping("/buildings/{buildingId}/floors/{floorNumber}/people")
     public PersonDto createPerson(
-            @RequestBody int desiredFloorNumber,
-            @RequestBody String name,
+            @RequestBody CreatePersonRequest request,
             @PathVariable int floorNumber,
             @PathVariable int buildingId
     ) {
 
         Person person = personService.createPerson(
                 floorNumber,
-                desiredFloorNumber,
-                name,
+                request.getDesiredFloorNumber(),
+                request.getName(),
                 buildingId
         );
 

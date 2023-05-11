@@ -8,7 +8,6 @@ import java.util.Date;
 public class ElevatorDestination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "SERIAL")
     private Integer id;
     private int floorNumber;
     private Date initialTime;
@@ -17,13 +16,6 @@ public class ElevatorDestination {
 
 
     public ElevatorDestination() {
-    }
-
-    public ElevatorDestination(Integer id, int floorNumber, Date initialTime, Elevator elevator) {
-        this.id = id;
-        this.floorNumber = floorNumber;
-        this.initialTime = initialTime;
-        this.elevator = elevator;
     }
 
     public Integer getId() {

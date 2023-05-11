@@ -21,13 +21,6 @@ public class Floor {
     public Floor() {
     }
 
-    public Floor(int id, int floorNumber, Building building, List<Person> people) {
-        this.id = id;
-        this.floorNumber = floorNumber;
-        this.building = building;
-        this.people = people;
-    }
-
     public FloorDto toDto(List<PersonDto> people) {
         return new FloorDto(this.floorNumber, people);
     }

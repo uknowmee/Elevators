@@ -12,4 +12,8 @@ public class PersonService implements IPersonService {
     public Person createPerson(int startFloorNumber, int desiredFloorNumber, String name, int buildingId) {
         return null;
     }
+
+    private Person createPerson() {
+        return new Person();
+    }
 }

@@ -1,4 +1,4 @@
-package com.uknowme.controllers;
+package com.uknowme.controllers.simulation;
 
 import com.uknowme.domain.Simulation;
 import com.uknowme.dtos.BuildingDetailsDto;
@@ -17,10 +17,12 @@ public class SimulationController {
 
     @PostMapping
     public BuildingDetailsDto createSimulation(
-            @RequestBody int numOfFloors,
-            @RequestBody int numOfElevators
+            @RequestBody CreateSimulationRequest request
     ) {
-        Simulation simulation = simulationService.createSimulation(numOfFloors, numOfElevators);
+        Simulation simulation = simulationService.createSaveSimulation(
+                request.getNumOfFloors(),
+                request.getNumOfElevators()
+        );
         return DomainToDtoMapper.mapBuildingToDto(simulation.getBuilding());
     }
 
