@@ -15,11 +15,11 @@ public class Building {
     private int numOfElevators;
     @OneToOne
     private Simulation simulation;
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Elevator> elevators;
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Floor> floors;
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Person> people;
 
     public Building() {
@@ -63,6 +63,7 @@ public class Building {
 
     public void setElevators(List<Elevator> elevators) {
         this.elevators = elevators;
+        elevators.forEach(elevator -> elevator.setBuilding(this));
     }
 
     public List<Floor> getFloors() {
@@ -81,5 +82,10 @@ public class Building {
     public void setPeople(List<Person> people) {
         this.people = people;
         people.forEach(person -> person.setBuilding(this));
+    }
+
+    public void addPerson(Person person) {
+        this.people.add(person);
+        person.setBuilding(this);
     }
 }

@@ -4,8 +4,9 @@ import com.uknowme.domain.elevator.Elevator;
 
 import java.util.List;
 
-public interface IElevatorService {
-    public List<Elevator> getBuildingElevators(int buildingId);
+public interface ElevatorService {
 
     List<Elevator> createElevators(int numOfElevators);
+
+    void validateNumberOfElevators(int numOfElevators) throws ElevatorServiceException;
 }

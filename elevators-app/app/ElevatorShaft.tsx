@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import ElevatorFloor from "./ElevatorFloor";
+
+import { useSimulationStore } from "../stores/customers";
 
 type ElevatorShaftProps = {
   numOfFloors: number;
@@ -28,8 +30,15 @@ function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
   }
 
   function tmp(): string[] {
-    return id % 2 == 0 ? ["test", "imie"] : [];
+    const elevators = useSimulationStore.getState().elevators;
+    if (elevators.length === 0 || id < 0 || id >= elevators.length) {
+      return [];
+    }
+    return elevators[id].people.map((person) =>
+      person.name + " " + person.direction + " " + person.desiredFloorNumber
+    );
   }
+  
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>

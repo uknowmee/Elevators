@@ -1,8 +1,10 @@
-package com.uknowme.services.elevator.impl;
+package com.uknowme.services.elevator;
 
 import com.uknowme.domain.elevator.Elevator;
-import com.uknowme.services.elevator.IElevatorService;
+import com.uknowme.repositories.BuildingRepository;
+import com.uknowme.repositories.ElevatorRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,11 +14,9 @@ import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @Service
-public class ElevatorService implements IElevatorService {
-    @Override
-    public List<Elevator> getBuildingElevators(int buildingId) {
-        return null;
-    }
+public class ElevatorServiceImpl implements ElevatorService {
+
+    private final ElevatorRepository elevatorRepository;
 
     @Override
     public List<Elevator> createElevators(int numOfElevators) {
@@ -25,6 +25,16 @@ public class ElevatorService implements IElevatorService {
                 .range(0, numOfElevators)
                 .mapToObj(i -> createElevator())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void validateNumberOfElevators(int numOfElevators) throws ElevatorServiceException {
+        if (numOfElevators < 3 || numOfElevators > 16)
+            throw new ElevatorServiceException(
+                    ElevatorServiceErrorCode.INVALID_NUMBER_OF_ELEVATORS,
+                    HttpStatus.BAD_REQUEST,
+                    ElevatorServiceException.INVALID_NUMBER_OF_ELEVATORS_MESSAGE
+            );
     }
 
     private Elevator createElevator() {

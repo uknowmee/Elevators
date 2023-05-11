@@ -15,7 +15,7 @@ public class Floor {
     private int floorNumber;
     @ManyToOne
     private Building building;
-    @OneToMany(mappedBy = "floor")
+    @OneToMany(mappedBy = "floor", fetch = FetchType.EAGER)
     private List<Person> people;
 
     public Floor() {

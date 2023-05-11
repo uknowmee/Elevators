@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import ElevatorShaft from "./ElevatorShaft";
 import Floor from "./Floor";
 import "../styles/Building.css"
 import FloorForm from "./FloorForm";
+
+import { useSimulationStore } from "../stores/customers";
 
 type BuildingProps = {
     numOfFloors: number;
@@ -26,7 +28,7 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
 
     const handleFormSubmit = (name: string, startFloor: number, desiredFloor: number) => {
         toggleShowForm(null);
-        // TODO: Put /api/newPerson
+        useSimulationStore.getState().AddPerson(startFloor, desiredFloor, name);
     };
 
     const elevatorShafts = Array.from({ length: numOfElevators }, (_, index) => (
@@ -34,7 +36,7 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
     ));
 
     const floors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems:"center"}}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
             <div className="floor-button" onClick={() => toggleShowForm(index)}>
                 {showForm ? " " : "+"}
             </div>
@@ -43,8 +45,14 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
     )).reverse();
 
     function tmp(index: number): string[] {
-        return index % 2 == 0 ? ["test", "imie", "asdasd", "asdasd"] : [];
-    }
+        const floor = useSimulationStore.getState().floors[index];
+        if (!floor || !floor.people || floor.people.length === 0) {
+          return [];
+        }
+        return floor.people.map((person) =>
+          person.name + " " + person.direction + " " + person.desiredFloorNumber
+        );
+    }  
 
     return (
         <div className="building-wrapper">
@@ -59,11 +67,11 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
 
             {showForm && selectedFloorIndex !== null && (
                 <div className="form-wrapper">
-                    <FloorForm 
+                    <FloorForm
                         floorIndex={selectedFloorIndex}
                         maxFloor={numOfFloors}
                         handleClose={handleFormClose}
-                        handleSubmit={(name: string, startFloor: number, desiredFloor: number) => { 
+                        handleSubmit={(name: string, startFloor: number, desiredFloor: number) => {
                             handleFormSubmit(name, startFloor, desiredFloor);
                         }}
                     />

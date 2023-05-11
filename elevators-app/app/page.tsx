@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import BuildingForm from "./BuildingForm"
 import Building from "./Building"
 import Controls from "./Controls";
+
+import { useSimulationStore } from "../stores/customers";
+
 
 
 export default function Home() {
@@ -16,25 +19,21 @@ export default function Home() {
   const [numOfElevators, setNumOfElevators] = useState(initElevators);
 
   const handleFormSubmit = (floors: number, elevators: number) => {
-    // TODO: POST /api/init
+    useSimulationStore.getState().InitSimulation(floors, elevators);
     setNumOfFloors(floors);
     setNumOfElevators(elevators);
     setShowForm(false);
   };
 
   const resetForm = () => {
-    // TODO: DELETE /api/clear
-    console.log("Reset");
-
+    useSimulationStore.getState().StopSimulation();
     setShowForm(true);
     setNumOfFloors(initFloors);
     setNumOfElevators(initElevators);
   };
 
   const step = () => {
-    // TODO: PUT /api/step
-    // TODO: GET /api/state
-    console.log("Step");
+    useSimulationStore.getState().MakeSimulationStep();
   };
 
   return (
@@ -44,9 +43,9 @@ export default function Home() {
           <BuildingForm handleSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
         </div>
       ) : (
-        <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px"}}>
-          <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} setShowControls={setshowControls}/>
-          <Controls onReset={resetForm} onStep={step} renderButtons={showControls}/>
+        <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px" }}>
+          <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} setShowControls={setshowControls} />
+          <Controls onReset={resetForm} onStep={step} renderButtons={showControls} />
         </div>
       )}
     </main>

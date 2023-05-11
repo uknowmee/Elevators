@@ -1,8 +1,10 @@
-package com.uknowme.services.impl;
+package com.uknowme.services.floor;
 
 import com.uknowme.domain.Floor;
-import com.uknowme.services.IFloorService;
+import com.uknowme.repositories.BuildingRepository;
+import com.uknowme.repositories.FloorRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,11 +14,9 @@ import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @Service
-public class FloorService implements IFloorService {
-    @Override
-    public List<Floor> getBuildingFloors(int buildingId) {
-        return null;
-    }
+public class FloorServiceImpl implements FloorService {
+
+    private final FloorRepository floorRepository;
 
     @Override
     public List<Floor> createFloors(int numOfFloors) {
@@ -25,6 +25,16 @@ public class FloorService implements IFloorService {
                 .range(0, numOfFloors)
                 .mapToObj(this::createFloor)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void validateNumberOfFloors(int numOfFloors) throws FloorServiceException {
+        if (numOfFloors < 8 || numOfFloors > 17)
+            throw new FloorServiceException(
+                    FloorServiceErrorCode.INVALID_NUMBER_OF_FLOORS,
+                    HttpStatus.BAD_REQUEST,
+                    FloorServiceException.INVALID_NUMBER_OF_FLOORS_MESSAGE
+            );
     }
 
     private Floor createFloor(int floorNumber) {

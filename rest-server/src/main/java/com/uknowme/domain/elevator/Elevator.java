@@ -16,9 +16,9 @@ public class Elevator {
     private boolean isOpened;
     @ManyToOne
     private Building building;
-    @OneToMany(mappedBy = "elevator")
+    @OneToMany(mappedBy = "elevator", fetch = FetchType.EAGER)
     private List<Person> people;
-    @OneToMany(mappedBy = "elevator")
+    @OneToMany(mappedBy = "elevator", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ElevatorDestination> elevatorDestinations;
 
     public Elevator() {

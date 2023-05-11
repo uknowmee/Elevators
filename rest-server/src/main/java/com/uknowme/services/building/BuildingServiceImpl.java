@@ -1,12 +1,13 @@
-package com.uknowme.services.impl;
+package com.uknowme.services.building;
 
 import com.uknowme.domain.Building;
 import com.uknowme.domain.Floor;
 import com.uknowme.domain.elevator.Elevator;
-import com.uknowme.services.IBuildingService;
-import com.uknowme.services.elevator.IElevatorService;
-import com.uknowme.services.IFloorService;
+import com.uknowme.repositories.BuildingRepository;
+import com.uknowme.services.elevator.ElevatorService;
+import com.uknowme.services.floor.FloorService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class BuildingService implements IBuildingService {
-    private final IElevatorService elevatorService;
-    private final IFloorService floorService;
+public class BuildingServiceImpl implements BuildingService {
+    private final ElevatorService elevatorService;
+    private final FloorService floorService;
+    private final BuildingRepository buildingRepository;
 
     @Override
     public Building createBuildingWithFloorsAndElevators(int numOfFloors, int numOfElevators) {
@@ -32,7 +34,17 @@ public class BuildingService implements IBuildingService {
         return building;
     }
 
-    private Building createBuilding(){
+    @Override
+    public Building getBuilding(int buildingId) throws BuildingServiceException {
+        return buildingRepository.findById(buildingId)
+                .orElseThrow(() -> new BuildingServiceException(
+                        BuildingServiceErrorCode.BUILDING_NOT_FOUND,
+                        HttpStatus.NOT_FOUND,
+                        BuildingServiceException.BUILDING_NOT_FOUND_MESSAGE
+                ));
+    }
+
+    private Building createBuilding() {
         Building building = new Building();
         building.setElevators(new ArrayList<>());
         building.setFloors(new ArrayList<>());

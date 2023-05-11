@@ -50,7 +50,7 @@ public class DomainToDtoMapper {
     public static BuildingDetailsDto mapBuildingToDto(Building building) {
         return new BuildingDetailsDto(
                 mapElevatorsToDto(building.getElevators()),
-                mapFloorsToDto(building.getFloors())
-        );
+                mapFloorsToDto(building.getFloors()),
+                building.getId());
     }
 }
