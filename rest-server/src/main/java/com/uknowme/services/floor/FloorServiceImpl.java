@@ -1,7 +1,6 @@
 package com.uknowme.services.floor;
 
 import com.uknowme.domain.Floor;
-import com.uknowme.repositories.FloorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
