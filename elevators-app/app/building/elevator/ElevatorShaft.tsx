@@ -22,7 +22,10 @@ function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
               key={index}
               number={index}
               isCurrent={index === elevator?.currentFloor}
-              names={elevator?.people?.map((person) => person.name + " " + person.desiredFloorNumber) ?? []}
+              information={elevator?.people?.map((person) => person.name + " " + person.desiredFloorNumber) ?? []}
+              isOpened={elevator?.isOpened ?? false}
+              destinationFloor={elevator?.destinationFloor ?? elevator?.currentFloor ?? 0}
+              state={elevator?.state ?? ""}
             />
           )
         ).reverse()
