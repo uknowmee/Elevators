@@ -20,6 +20,7 @@ function FloorForm({ floorIndex, maxFloor, handleClose, handleSubmit }: FloorFor
     return (
         <div className="floor-form">
             <form onSubmit={onSubmit}>
+                <label>Floor {floorIndex}</label>
                 <label>Name:
                     <input
                         type="text"
@@ -33,7 +34,7 @@ function FloorForm({ floorIndex, maxFloor, handleClose, handleSubmit }: FloorFor
                     />
                 </label>
                 <br />
-                <label>Floor:
+                <label>Desired Floor:
                     <input
                         type="number"
                         id="desired-floor-input"

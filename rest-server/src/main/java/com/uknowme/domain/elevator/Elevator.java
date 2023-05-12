@@ -14,6 +14,7 @@ public class Elevator {
     private int currentFloor;
     private int destinationFloor;
     private boolean isOpened;
+    private int serialNumber;
     @ManyToOne
     private Building building;
     @OneToMany(mappedBy = "elevator", fetch = FetchType.EAGER)
@@ -74,5 +75,13 @@ public class Elevator {
 
     public void setElevatorDestinations(List<ElevatorDestination> elevatorDestinations) {
         this.elevatorDestinations = elevatorDestinations;
+    }
+
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(int number) {
+        this.serialNumber = number;
     }
 }

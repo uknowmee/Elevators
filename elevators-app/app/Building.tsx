@@ -1,8 +1,8 @@
 import React, { use, useState } from "react";
-import ElevatorShaft from "./ElevatorShaft";
-import Floor from "./Floor";
-import "../styles/Building.css"
 import FloorForm from "./FloorForm";
+import Floors from "./Floors";
+import ElevatorShaft from "./ElevatorShaft";
+import "../styles/Building.css"
 
 import { useSimulationStore } from "../stores/customers";
 
@@ -35,31 +35,12 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
         <ElevatorShaft key={index} numOfFloors={numOfFloors} id={index} />
     ));
 
-    const floors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-            <div className="floor-button" onClick={() => toggleShowForm(index)}>
-                {showForm ? " " : "+"}
-            </div>
-            <Floor key={index} number={index} names={tmp(index)} />
-        </div>
-    )).reverse();
-
-    function tmp(index: number): string[] {
-        const floor = useSimulationStore.getState().floors[index];
-        if (!floor || !floor.people || floor.people.length === 0) {
-          return [];
-        }
-        return floor.people.map((person) =>
-          person.name + " " + person.direction + " " + person.desiredFloorNumber
-        );
-    }  
-
     return (
         <div className="building-wrapper">
             <div className="building">
                 <div style={{ width: "80px" }}></div>
                 <div style={{ display: "flex", flexDirection: "column", paddingRight: "30px" }}>
-                    {floors}
+                    <Floors key={-1} numOfFloors={numOfFloors} toggleShowForm={toggleShowForm} showForm={showForm} />
                 </div>
                 {elevatorShafts}
                 <div style={{ width: "50px" }}></div>

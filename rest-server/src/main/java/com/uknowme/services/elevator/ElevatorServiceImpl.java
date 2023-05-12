@@ -1,7 +1,6 @@
 package com.uknowme.services.elevator;
 
 import com.uknowme.domain.elevator.Elevator;
-import com.uknowme.repositories.BuildingRepository;
 import com.uknowme.repositories.ElevatorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ public class ElevatorServiceImpl implements ElevatorService {
 
         return IntStream
                 .range(0, numOfElevators)
-                .mapToObj(i -> createElevator())
+                .mapToObj(this::createElevator)
                 .collect(Collectors.toList());
     }
 
@@ -37,7 +36,7 @@ public class ElevatorServiceImpl implements ElevatorService {
             );
     }
 
-    private Elevator createElevator() {
+    private Elevator createElevator(int serialNumber) {
         Elevator elevator = new Elevator();
         elevator.setElevatorDestinations(new ArrayList<>());
         elevator.setPeople(new ArrayList<>());
@@ -45,6 +44,7 @@ public class ElevatorServiceImpl implements ElevatorService {
         elevator.setCurrentFloor(0);
         elevator.setDestinationFloor(0);
         elevator.setOpened(false);
+        elevator.setSerialNumber(serialNumber);
 
         return elevator;
     }

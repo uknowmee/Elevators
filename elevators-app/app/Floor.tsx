@@ -26,7 +26,7 @@ const Floor = ({ number, names }: FloorProps) => {
 
     return (
         <div className="floor" onClick={toggleShowNames}>
-            <div className={`floor-number ${showNames ? "hidden" : ""} ${names.length > 0 ? "has-names" : "no-names"}`}>
+            <div className={`floor-number ${showNames ? "hidden" : ""} ${names?.length > 0 ? "has-names" : "no-names"}`}>
                 {number}
             </div>
             <div
@@ -34,7 +34,7 @@ const Floor = ({ number, names }: FloorProps) => {
                 onAnimationEnd={() => setShowingNames(false)}
             >
                 <div className="floor-names-inner">
-                    {names.map((name, index) => (
+                    {names?.map((name, index) => (
                         <div key={index} className="name-item">
                             {index + 1}. {name}
                         </div>

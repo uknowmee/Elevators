@@ -4,14 +4,16 @@ import java.util.List;
 
 public class ElevatorDto {
     private int currentFloor;
+    private int serialNumber;
     private boolean isOpened;
     private List<PersonDto> people;
 
     public ElevatorDto() {
     }
 
-    public ElevatorDto(int currentFloor, boolean isOpened, List<PersonDto> people) {
+    public ElevatorDto(int currentFloor, int serialNumber, boolean isOpened, List<PersonDto> people) {
         this.currentFloor = currentFloor;
+        this.serialNumber = serialNumber;
         this.isOpened = isOpened;
         this.people = people;
     }
@@ -38,5 +40,13 @@ public class ElevatorDto {
 
     public void setOpened(boolean opened) {
         isOpened = opened;
+    }
+
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

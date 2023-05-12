@@ -11,23 +11,30 @@ type ElevatorShaftProps = {
 };
 
 function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
-  const [currentFloor, setCurrentFloor] = useState(0);
+  // const [currentFloor, setCurrentFloor] = useState(0);
+
+  const elevator = useSimulationStore(state => state.elevators).find(elevator => elevator.serialNumber === id);
+  // const people = elevator?.people;
+  // // setCurrentFloor(elevator?.currentFloor);
+  // const currentFloor = elevator?.currentFloor;
 
   const elevatorFloors = Array.from({ length: numOfFloors + 1 }, (_, index) => (
-    <ElevatorFloor key={index} number={index} isCurrent={index === currentFloor} names={tmp()}/>
+    <ElevatorFloor key={index} number={index} isCurrent={index === elevator?.currentFloor} names={
+      elevator?.people?.map((person) => person.name + " " + person.desiredFloorNumber) ?? []
+    } />
   )).reverse();
 
-  function top() {
-    if (currentFloor < numOfFloors) {
-      setCurrentFloor(currentFloor + 1);
-    }
-  }
+  // function top() {
+  //   if (currentFloor < numOfFloors) {
+  //     setCurrentFloor(currentFloor + 1);
+  //   }
+  // }
 
-  function down() {
-    if (currentFloor > 0) {
-      setCurrentFloor(currentFloor - 1);
-    }
-  }
+  // function down() {
+  //   if (currentFloor > 0) {
+  //     setCurrentFloor(currentFloor - 1);
+  //   }
+  // }
 
   function tmp(): string[] {
     const elevators = useSimulationStore.getState().elevators;
@@ -38,16 +45,16 @@ function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
       person.name + " " + person.direction + " " + person.desiredFloorNumber
     );
   }
-  
+
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>
       <div>{elevatorFloors}</div>
 
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", margin: "10px", }} >
+      {/* <div style={{ display: "flex", flexDirection: "row", alignItems: "center", margin: "10px", }} >
         <button onClick={top}>↑</button>
         <button onClick={down}>↓</button>
-      </div>
+      </div> */}
 
     </div>
   );

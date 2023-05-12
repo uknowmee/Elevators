@@ -15,6 +15,7 @@ interface Person {
 
 interface Elevator {
   currentFloor: number;
+  serialNumber: number;
   people: Person[];
   isOpened: boolean;
 }
@@ -70,8 +71,6 @@ export const useSimulationStore = create<SimulationState>((set) => ({
 
     const person: Person = await response.json();
 
-    console.log(person);
-
     const response_2 = await fetch(`${API_URL}/simulations/${buildingId}`, {
       method: 'GET',
       headers: {
@@ -80,9 +79,6 @@ export const useSimulationStore = create<SimulationState>((set) => ({
     });
 
     const { floors, elevators } = await response_2.json();
-
-    console.log(floors);
-    console.log(elevators);
 
     set({ floors, elevators });
   },
