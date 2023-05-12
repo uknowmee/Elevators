@@ -49,4 +49,9 @@ public class ElevatorDestination {
     public void setInitialTime(Date initialTime) {
         this.initialTime = initialTime;
     }
+
+    @Override
+    public String toString() {
+        return floorNumber + "";
+    }
 }

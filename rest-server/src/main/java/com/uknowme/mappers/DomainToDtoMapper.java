@@ -27,6 +27,8 @@ public class DomainToDtoMapper {
     public static ElevatorDto mapElevatorToDto(Elevator elevator) {
         return new ElevatorDto(
                 elevator.getCurrentFloor(),
+                elevator.getState(),
+                elevator.getDestinationFloor(),
                 elevator.getSerialNumber(),
                 elevator.isOpened(),
                 mapPeopleToDto(elevator.getPeople())

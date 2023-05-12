@@ -16,6 +16,8 @@ interface Person {
 interface Elevator {
   currentFloor: number;
   serialNumber: number;
+  destinationFloor: number;
+  state: string;
   people: Person[];
   isOpened: boolean;
 }

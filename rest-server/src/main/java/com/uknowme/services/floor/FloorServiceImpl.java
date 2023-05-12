@@ -1,7 +1,6 @@
 package com.uknowme.services.floor;
 
 import com.uknowme.domain.Floor;
-import com.uknowme.repositories.BuildingRepository;
 import com.uknowme.repositories.FloorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,8 +14,6 @@ import java.util.stream.IntStream;
 @AllArgsConstructor
 @Service
 public class FloorServiceImpl implements FloorService {
-
-    private final FloorRepository floorRepository;
 
     @Override
     public List<Floor> createFloors(int numOfFloors) {

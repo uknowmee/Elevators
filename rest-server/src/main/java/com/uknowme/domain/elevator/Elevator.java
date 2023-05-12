@@ -5,6 +5,7 @@ import com.uknowme.domain.person.Person;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Elevator {
@@ -15,6 +16,8 @@ public class Elevator {
     private int destinationFloor;
     private boolean isOpened;
     private int serialNumber;
+    @Enumerated(EnumType.STRING)
+    private ElevatorState state;
     @ManyToOne
     private Building building;
     @OneToMany(mappedBy = "elevator", fetch = FetchType.EAGER)
@@ -83,5 +86,25 @@ public class Elevator {
 
     public void setSerialNumber(int number) {
         this.serialNumber = number;
+    }
+
+    public ElevatorState getState() {
+        return state;
+    }
+
+    public void setState(ElevatorState state) {
+        this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Elevator{" +
+                ", currentFloor=" + currentFloor +
+                ", destinationFloor=" + destinationFloor +
+                ", isOpened=" + isOpened +
+                ", state=" + state +
+                ", elevatorDestinations=" + elevatorDestinations.stream().map(ElevatorDestination::toString).collect(Collectors.joining(", ")) +
+                ", people=" + people.stream().map(Person::toString).collect(Collectors.joining("\n")) +
+                '}';
     }
 }

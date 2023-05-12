@@ -22,11 +22,11 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public Building createBuildingWithFloorsAndElevators(int numOfFloors, int numOfElevators) {
-        List<Floor> floors = floorService.createFloors(numOfFloors);
+        List<Floor> floors = floorService.createFloors(numOfFloors + 1);
         List<Elevator> elevators = elevatorService.createElevators(numOfElevators);
 
         Building building = createBuilding();
-        building.setNumOfFloors(numOfFloors);
+        building.setNumOfFloors(numOfFloors + 1);
         building.setNumOfElevators(numOfElevators);
         building.setFloors(floors);
         building.setElevators(elevators);

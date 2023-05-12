@@ -14,6 +14,7 @@ public class Person {
     private int startFloorNumber;
     private int desiredFloorNumber;
     private int currentFloorNumber;
+    private boolean needService;
     @Enumerated(EnumType.STRING)
     private Direction direction;
 
@@ -107,5 +108,23 @@ public class Person {
 
     public void setBuildingId(Building building) {
         this.building = building;
+    }
+
+    public boolean isNeedService() {
+        return needService;
+    }
+
+    public void setNeedService(boolean needsService) {
+        this.needService = needsService;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", desiredFloorNumber=" + desiredFloorNumber +
+                ", currentFloorNumber=" + currentFloorNumber +
+                ", direction=" + direction +
+                '}';
     }
 }

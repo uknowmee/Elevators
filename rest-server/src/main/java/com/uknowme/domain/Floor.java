@@ -6,6 +6,7 @@ import com.uknowme.dtos.PersonDto;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Floor {
@@ -55,5 +56,15 @@ public class Floor {
 
     public void setPeople(List<Person> people) {
         this.people = people;
+    }
+
+    @Override
+    public String toString() {
+        return "Floor{" +
+                "id=" + id +
+                ", floorNumber=" + floorNumber +
+                ", building=" + building +
+                ", people=" + people.stream().map(Person::toString).collect(Collectors.joining("\n")) +
+                '}';
     }
 }

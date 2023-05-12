@@ -2,10 +2,13 @@ package com.uknowme.services.simulation;
 
 import com.uknowme.domain.Building;
 import com.uknowme.domain.Simulation;
+import com.uknowme.domain.elevator.Elevator;
+import com.uknowme.domain.person.Person;
 import com.uknowme.repositories.SimulationRepository;
 import com.uknowme.services.building.BuildingService;
 import com.uknowme.services.elevator.ElevatorService;
 import com.uknowme.services.floor.FloorService;
+import com.uknowme.services.person.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -22,6 +26,7 @@ public class SimulationServiceImpl implements SimulationService {
     private final BuildingService buildingService;
     private final FloorService floorService;
     private final ElevatorService elevatorService;
+    private final PersonService personService;
 
     @Override
     public Simulation createSaveSimulation(int numOfFloors, int numOfElevators) {
@@ -64,8 +69,21 @@ public class SimulationServiceImpl implements SimulationService {
     @Override
     public Simulation makeSimulationStep(int buildingId) {
         Simulation simulation = getSimulation(buildingId);
-//        TODO: implement simulation step
-        return null;
+
+        List<Person> peopleInBuilding = simulation.getBuilding().getPeople();
+        List<Elevator> elevators = simulation.getBuilding().getElevators();
+        List<Person> peopleNotInElevatorsButOnFloors = personService.getPeopleNotInElevatorsButOnFloors(peopleInBuilding);
+
+        elevatorService.getPeopleOffElevators(elevators);
+        personService.enterElevator(peopleNotInElevatorsButOnFloors, elevatorService.getElevatorsReadyForEntering(elevators));
+
+        List<Person> needsService = personService.getPeopleWhoNeedService(peopleInBuilding);
+        elevatorService.addElevatorGoals(elevators, needsService);
+
+        elevatorService.changeStateOfElevators(elevators);
+        elevatorService.moveElevators(elevators);
+
+        return simulationRepository.save(simulation);
     }
 
     private Simulation createSimulation() {
