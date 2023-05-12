@@ -40,7 +40,10 @@ function ElevatorFloor({ number, isCurrent, names }: ElevatorFloorProps) {
           className={`elevatorFloor-names ${showingNames ? "visible" : ""}`}
           onAnimationEnd={() => setShowingNames(false)}
         >
-          <div className="elevatorFloor-names-inner">
+          <div
+            className="elevatorFloor-names-inner"
+            style={{ overflow: "auto" }}
+          >
             {names.map((name, index) => (
               <div key={index} className="name-item">
                 {index + 1}. {name}

@@ -37,6 +37,7 @@
 
 .floor-names-inner {
     color: #fff;
+    overflow: auto;
 }
 
 .name-item {

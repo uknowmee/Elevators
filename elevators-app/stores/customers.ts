@@ -109,5 +109,4 @@ export const useSimulationStore = create<SimulationState>((set) => ({
 
     set({ floors: floors, elevators: elevators });
   },
-  
 }));

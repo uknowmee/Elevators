@@ -43,7 +43,7 @@ export default function Home() {
           <BuildingForm handleSubmit={handleFormSubmit} initFloors={initFloors} initElevators={initElevators} />
         </div>
       ) : (
-        <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px", overflow: "hidden"}}>
           <Building numOfFloors={numOfFloors} numOfElevators={numOfElevators} setShowControls={setshowControls} />
           <Controls onReset={resetForm} onStep={step} renderButtons={showControls} />
         </div>
