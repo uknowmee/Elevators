@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Floor.css";
+import "../../../styles/Floor.css";
 
 type FloorProps = {
     number: number;

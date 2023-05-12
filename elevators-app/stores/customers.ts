@@ -50,12 +50,38 @@ export const useSimulationStore = create<SimulationState>((set) => ({
 
     const { buildingId, floors, elevators } = await response.json();
 
-    set({ buildingId, floors, elevators });
+    set({ buildingId: buildingId, floors: floors, elevators: elevators });
   },
+
   StopSimulation: async () => {
+    const { buildingId } = useSimulationStore.getState();
+    const response = await fetch(`${API_URL}/simulations/${buildingId}/stop`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const info = await response.text();
+    console.log(info);
+
+    set({ buildingId: 0, floors: [], elevators: [] });
   },
+
   MakeSimulationStep: async () => {
+    const { buildingId } = useSimulationStore.getState();
+    const response = await fetch(`${API_URL}/simulations/${buildingId}/step`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const { floors, elevators } = await response.json();
+
+    set({ floors: floors, elevators: elevators });
   },
+
   AddPerson: async (floorNumber: number, desiredFloorNumber: number, name: string) => {
     const { buildingId } = useSimulationStore.getState();
     const response = await fetch(`${API_URL}/buildings/${buildingId}/floors/${floorNumber}/people`, {
@@ -70,6 +96,7 @@ export const useSimulationStore = create<SimulationState>((set) => ({
     });
 
     const person: Person = await response.json();
+    console.log(person);
 
     const response_2 = await fetch(`${API_URL}/simulations/${buildingId}`, {
       method: 'GET',
@@ -80,6 +107,7 @@ export const useSimulationStore = create<SimulationState>((set) => ({
 
     const { floors, elevators } = await response_2.json();
 
-    set({ floors, elevators });
+    set({ floors: floors, elevators: elevators });
   },
+  
 }));

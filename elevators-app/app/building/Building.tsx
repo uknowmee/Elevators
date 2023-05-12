@@ -1,10 +1,10 @@
 import React, { use, useState } from "react";
-import FloorForm from "./FloorForm";
-import Floors from "./Floors";
-import ElevatorShaft from "./ElevatorShaft";
-import "../styles/Building.css"
+import FloorForm from "./floor/FloorForm";
+import Floors from "./floor/Floors";
+import ElevatorShaft from "./elevator/ElevatorShaft";
+import "../../styles/building.css";
 
-import { useSimulationStore } from "../stores/customers";
+import { useSimulationStore } from "../../stores/customers";
 
 type BuildingProps = {
     numOfFloors: number;
@@ -31,18 +31,21 @@ function Building({ numOfFloors, numOfElevators, setShowControls }: BuildingProp
         useSimulationStore.getState().AddPerson(startFloor, desiredFloor, name);
     };
 
-    const elevatorShafts = Array.from({ length: numOfElevators }, (_, index) => (
-        <ElevatorShaft key={index} numOfFloors={numOfFloors} id={index} />
-    ));
-
     return (
         <div className="building-wrapper">
-            <div className="building">
+            <div className="building" style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
                 <div style={{ width: "80px" }}></div>
                 <div style={{ display: "flex", flexDirection: "column", paddingRight: "30px" }}>
-                    <Floors key={-1} numOfFloors={numOfFloors} toggleShowForm={toggleShowForm} showForm={showForm} />
+                    <Floors
+                        key={-1}
+                        numOfFloors={numOfFloors}
+                        toggleShowForm={toggleShowForm}
+                        showForm={showForm}
+                    />
                 </div>
-                {elevatorShafts}
+                {Array.from({ length: numOfElevators }, (_, index) => (
+                    <ElevatorShaft key={index} numOfFloors={numOfFloors} id={index} />
+                ))}
                 <div style={{ width: "50px" }}></div>
             </div>
 

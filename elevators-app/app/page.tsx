@@ -2,7 +2,7 @@
 
 import React, { use, useState } from "react";
 import BuildingForm from "./BuildingForm"
-import Building from "./Building"
+import Building from "./building/Building"
 import Controls from "./Controls";
 
 import { useSimulationStore } from "../stores/customers";

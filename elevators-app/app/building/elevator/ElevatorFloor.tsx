@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/ElevatorFloor.css";
+import "../../../styles/elevatorFloor.css"
 
 type ElevatorFloorProps = {
   isCurrent: boolean;
