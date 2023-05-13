@@ -1,8 +1,9 @@
-package com.uknowme.services.elevatorDestination;
+package com.uknowme.services.elevator.destination;
 
 import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.elevator.ElevatorDestination;
 import com.uknowme.domain.person.Direction;
+import com.uknowme.services.elevator.direction.ElevatorDirectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +11,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class ElevatorDestinationServiceImpl implements ElevatorDestinationService {
 
-    private ElevatorDestination createElevatorDestination(Elevator elevator, int floorNumber) {
-        ElevatorDestination elevatorDestination = new ElevatorDestination();
-        elevatorDestination.setInitialTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-        elevatorDestination.setFloorNumber(floorNumber);
-        elevatorDestination.setElevator(elevator);
-
-        return elevatorDestination;
-    }
+    private static final int MAX_DESTINATIONS = 3;
+    private final ElevatorDirectionService directionService;
 
     @Override
     public void addElevatorDestinationToGrabPerson(Elevator elevator, int currentFloorNumber) {
@@ -44,28 +40,6 @@ public class ElevatorDestinationServiceImpl implements ElevatorDestinationServic
         if (elevator.getElevatorDestinations().size() < 2) return newElevatorDestination.getFloorNumber();
 
         return checkStopBetweenFloors(elevator, newElevatorDestination);
-    }
-
-    private int checkStopBetweenFloors(Elevator elevator, ElevatorDestination newElevatorDestination) {
-        Direction direction = elevator.getDestinationFloor() > elevator.getCurrentFloor()
-                ? Direction.UP
-                : Direction.DOWN;
-
-        for (ElevatorDestination destination : elevator.getElevatorDestinations()) {
-            if (direction == Direction.UP
-                    && destination.getFloorNumber() >= elevator.getCurrentFloor()
-                    && destination.getFloorNumber() < newElevatorDestination.getFloorNumber()
-            ) {
-                newElevatorDestination = destination;
-            } else if (direction == Direction.DOWN
-                    && destination.getFloorNumber() <= elevator.getCurrentFloor()
-                    && destination.getFloorNumber() > newElevatorDestination.getFloorNumber()
-            ) {
-                newElevatorDestination = destination;
-            }
-        }
-
-        return newElevatorDestination.getFloorNumber();
     }
 
     @Override
@@ -102,9 +76,63 @@ public class ElevatorDestinationServiceImpl implements ElevatorDestinationServic
                 .anyMatch(elevatorDestination -> elevatorDestination.getFloorNumber() == nextFloor);
     }
 
+    @Override
+    public List<Elevator> findElevatorWithNoDestinations(List<Elevator> elevators) {
+        return elevators.stream().filter(elevator -> elevator.getElevatorDestinations().isEmpty()).toList();
+    }
+
+    @Override
+    public List<Elevator> onWayToDestinationMovingSameDirection(
+            List<Elevator> elevators,
+            int personFloorNumber,
+            Direction personDirection
+    ) {
+        return elevators.stream().filter(elevator -> directionService.getElevatorDirection(elevator) == personDirection
+                        && elevator.getCurrentFloor() < personFloorNumber
+                        && elevator.getDestinationFloor() > personFloorNumber
+                )
+                .toList();
+    }
+
+    @Override
+    public List<Elevator> lessThanMaxDestinations(List<Elevator> canServe) {
+        return canServe.stream().filter(elevator -> elevator.getElevatorDestinations().size() < MAX_DESTINATIONS).toList();
+    }
+
+    private int checkStopBetweenFloors(Elevator elevator, ElevatorDestination newElevatorDestination) {
+        Direction direction = elevator.getDestinationFloor() > elevator.getCurrentFloor()
+                ? Direction.UP
+                : Direction.DOWN;
+
+        for (ElevatorDestination destination : elevator.getElevatorDestinations()) {
+            if (direction == Direction.UP
+                    && destination.getFloorNumber() >= elevator.getCurrentFloor()
+                    && destination.getFloorNumber() < newElevatorDestination.getFloorNumber()
+            ) {
+                newElevatorDestination = destination;
+            } else if (direction == Direction.DOWN
+                    && destination.getFloorNumber() <= elevator.getCurrentFloor()
+                    && destination.getFloorNumber() > newElevatorDestination.getFloorNumber()
+            ) {
+                newElevatorDestination = destination;
+            }
+        }
+
+        return newElevatorDestination.getFloorNumber();
+    }
+
     private void updateElevatorDestinationFloor(Elevator elevator, ElevatorDestination elevatorDestination) {
         if (elevator.getCurrentFloor() == elevator.getDestinationFloor()) {
             elevator.setDestinationFloor(elevatorDestination.getFloorNumber());
         }
+    }
+
+    private ElevatorDestination createElevatorDestination(Elevator elevator, int floorNumber) {
+        ElevatorDestination elevatorDestination = new ElevatorDestination();
+        elevatorDestination.setInitialTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        elevatorDestination.setFloorNumber(floorNumber);
+        elevatorDestination.setElevator(elevator);
+
+        return elevatorDestination;
     }
 }

@@ -2,15 +2,15 @@ package com.uknowme.services.elevator;
 
 import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.person.Person;
+import com.uknowme.services.elevator.validation.ElevatorValidationServiceException;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public interface ElevatorService {
 
     List<Elevator> createElevators(int numOfElevators);
 
-    void validateNumberOfElevators(int numOfElevators) throws ElevatorServiceException;
+    void validateNumberOfElevators(int numOfElevators) throws ElevatorValidationServiceException;
 
     void getPeopleOffElevators(List<Elevator> elevators);
 

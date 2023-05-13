@@ -12,13 +12,6 @@ type ElevatorFloorProps = {
 
 function ElevatorFloor({ number, isCurrent, information, destinationFloor, state }: ElevatorFloorProps) {
   const color = isCurrent ? "green" : "#ddd";
-  const borderColor = state == null ? ""
-      : state === ElevatorState.STOPPED ? "red"
-      : state === ElevatorState.MOVING ? "blue"
-      : state === ElevatorState.OPENING ? "purple"
-      : state === ElevatorState.CLOSING ? "purple"
-      : state === ElevatorState.ENTERING_EXITING ? "yellow"
-      : undefined!;
 
   const [showNames, setShowNames] = useState(false);
   const [showingNames, setShowingNames] = useState(false);

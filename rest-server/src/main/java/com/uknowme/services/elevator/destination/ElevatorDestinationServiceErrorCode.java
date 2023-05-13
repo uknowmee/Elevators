@@ -1,4 +1,4 @@
-package com.uknowme.services.elevatorDestination;
+package com.uknowme.services.elevator.destination;
 
 public enum ElevatorDestinationServiceErrorCode {
 }

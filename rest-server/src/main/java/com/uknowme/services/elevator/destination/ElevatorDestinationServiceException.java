@@ -1,4 +1,4 @@
-package com.uknowme.services.elevatorDestination;
+package com.uknowme.services.elevator.destination;
 
 import com.uknowme.controllers.CoreException;
 import org.springframework.http.HttpStatus;

@@ -6,9 +6,9 @@ import com.uknowme.domain.person.Direction;
 import com.uknowme.domain.person.Person;
 import com.uknowme.repositories.PersonRepository;
 import com.uknowme.services.building.BuildingService;
-import com.uknowme.services.elevatorDestination.ElevatorDestinationService;
+import com.uknowme.services.elevator.destination.ElevatorDestinationService;
+import com.uknowme.services.person.validation.PersonValidationService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +17,18 @@ import java.util.List;
 @Service
 public class PersonServiceImpl implements PersonService {
 
+    private final PersonRepository personRepository;
     private final BuildingService buildingService;
     private final ElevatorDestinationService elevatorDestinationService;
-    private final PersonRepository personRepository;
+    private final PersonValidationService validationService;
 
     @Override
     public Person createValidPerson(int startFloorNumber, int desiredFloorNumber, String name, int buildingId) {
         Building building = buildingService.getBuilding(buildingId);
 
-        validateStartFloorNumber(startFloorNumber, building);
-        validateDesiredFloorNumber(desiredFloorNumber, building);
-        checkDifferent(startFloorNumber, desiredFloorNumber);
+        validationService.validateStartFloorNumber(startFloorNumber, building);
+        validationService.validateDesiredFloorNumber(desiredFloorNumber, building);
+        validationService.checkDifferent(startFloorNumber, desiredFloorNumber);
 
         Person person = createPerson(startFloorNumber, desiredFloorNumber, name);
         person.setBuilding(building);
@@ -74,33 +75,6 @@ public class PersonServiceImpl implements PersonService {
         person.setFloor(null);
         person.setElevator(elevator);
         elevator.getPeople().add(person);
-    }
-
-    private void checkDifferent(int startFloorNumber, int desiredFloorNumber) {
-        if (startFloorNumber == desiredFloorNumber)
-            throw new PersonServiceException(
-                    PersonServiceErrorCode.START_AND_DESIRED_FLOOR_NUMBER_ARE_SAME,
-                    HttpStatus.BAD_REQUEST,
-                    PersonServiceException.START_AND_DESIRED_FLOOR_NUMBER_ARE_SAME_MESSAGE
-            );
-    }
-
-    private void validateStartFloorNumber(int startFloorNumber, Building building) throws PersonServiceException {
-        if (startFloorNumber < 0 || startFloorNumber > building.getNumOfFloors())
-            throw new PersonServiceException(
-                    PersonServiceErrorCode.INVALID_START_FLOOR_NUMBER,
-                    HttpStatus.BAD_REQUEST,
-                    PersonServiceException.INVALID_START_FLOOR_NUMBER_MESSAGE
-            );
-    }
-
-    private void validateDesiredFloorNumber(int desiredFloorNumber, Building building) throws PersonServiceException {
-        if (desiredFloorNumber < 0 || desiredFloorNumber > building.getNumOfFloors())
-            throw new PersonServiceException(
-                    PersonServiceErrorCode.INVALID_DESIRED_FLOOR_NUMBER,
-                    HttpStatus.BAD_REQUEST,
-                    PersonServiceException.INVALID_DESIRED_FLOOR_NUMBER_MESSAGE
-            );
     }
 
     private Person createPerson(int startFloorNumber, int desiredFloorNumber, String name) {
