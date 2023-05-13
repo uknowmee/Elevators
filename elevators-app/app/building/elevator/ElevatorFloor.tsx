@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../../../styles/elevatorFloor.css"
+import { ElevatorState } from "../../../stores/customers";
 
 type ElevatorFloorProps = {
   isCurrent: boolean;
   number: number;
   information: string[];
-  isOpened: boolean;
   destinationFloor: number;
-  state: string;
+  state: ElevatorState | null;
 };
 
-function ElevatorFloor({ number, isCurrent, information, isOpened, destinationFloor, state }: ElevatorFloorProps) {
+function ElevatorFloor({ number, isCurrent, information, destinationFloor, state }: ElevatorFloorProps) {
   const color = isCurrent ? "green" : "#ddd";
+  const borderColor = state == null ? ""
+      : state === ElevatorState.STOPPED ? "red"
+      : state === ElevatorState.MOVING ? "blue"
+      : state === ElevatorState.OPENING ? "purple"
+      : state === ElevatorState.CLOSING ? "purple"
+      : state === ElevatorState.ENTERING_EXITING ? "yellow"
+      : undefined!;
 
   const [showNames, setShowNames] = useState(false);
   const [showingNames, setShowingNames] = useState(false);
@@ -38,10 +45,7 @@ function ElevatorFloor({ number, isCurrent, information, isOpened, destinationFl
     )
     : (
       <div className="elevatorFloor" onClick={toggleShowNames}>
-        <div
-          className={`${information.length > 0 ? "has-names" : "no-names"}`}
-          style={ isOpened ? {border: "2px solid black"} : {}}
-        >
+        <div className={`${information.length > 0 ? "has-names" : "no-names"}`}>
           {destinationFloor}
         </div>
         <div

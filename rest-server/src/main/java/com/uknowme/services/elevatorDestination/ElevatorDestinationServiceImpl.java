@@ -39,7 +39,33 @@ public class ElevatorDestinationServiceImpl implements ElevatorDestinationServic
             elevator.getElevatorDestinations().sort(Comparator.comparing(ElevatorDestination::getInitialTime));
         }
 
-        return elevator.getElevatorDestinations().get(0).getFloorNumber();
+        ElevatorDestination newElevatorDestination = elevator.getElevatorDestinations().get(0);
+
+        if (elevator.getElevatorDestinations().size() < 2) return newElevatorDestination.getFloorNumber();
+
+        return checkStopBetweenFloors(elevator, newElevatorDestination);
+    }
+
+    private int checkStopBetweenFloors(Elevator elevator, ElevatorDestination newElevatorDestination) {
+        Direction direction = elevator.getDestinationFloor() > elevator.getCurrentFloor()
+                ? Direction.UP
+                : Direction.DOWN;
+
+        for (ElevatorDestination destination : elevator.getElevatorDestinations()) {
+            if (direction == Direction.UP
+                    && destination.getFloorNumber() >= elevator.getCurrentFloor()
+                    && destination.getFloorNumber() < newElevatorDestination.getFloorNumber()
+            ) {
+                newElevatorDestination = destination;
+            } else if (direction == Direction.DOWN
+                    && destination.getFloorNumber() <= elevator.getCurrentFloor()
+                    && destination.getFloorNumber() > newElevatorDestination.getFloorNumber()
+            ) {
+                newElevatorDestination = destination;
+            }
+        }
+
+        return newElevatorDestination.getFloorNumber();
     }
 
     @Override

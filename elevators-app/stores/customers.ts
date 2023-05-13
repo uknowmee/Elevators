@@ -13,11 +13,19 @@ interface Person {
   desiredFloorNumber: number;
 }
 
+export enum ElevatorState {
+  STOPPED = 'STOPPED',
+  MOVING = 'MOVING',
+  OPENING = 'OPENING',
+  CLOSING = 'CLOSING',
+  ENTERING_EXITING = 'ENTERING_EXITING'
+}
+
 interface Elevator {
   currentFloor: number;
   serialNumber: number;
   destinationFloor: number;
-  state: string;
+  state: ElevatorState;
   people: Person[];
   isOpened: boolean;
 }
