@@ -2,8 +2,7 @@ package com.uknowme.services.elevator;
 
 import com.uknowme.domain.elevator.Elevator;
 import com.uknowme.domain.person.Person;
-import com.uknowme.services.elevator.destination.ElevatorDestinationService;
-import com.uknowme.services.elevator.distance.ElevatorDistanceService;
+import com.uknowme.services.elevator.goal.ElevatorGoalService;
 import com.uknowme.services.elevator.move.ElevatorMoveService;
 import com.uknowme.services.elevator.state.ElevatorStateService;
 import com.uknowme.services.elevator.validation.ElevatorValidationService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,10 +19,9 @@ import java.util.stream.IntStream;
 public class ElevatorServiceImpl implements ElevatorService {
 
     private final ElevatorValidationService validationService;
-    private final ElevatorDestinationService destinationService;
-    private final ElevatorDistanceService distanceService;
     private final ElevatorStateService stateService;
     private final ElevatorMoveService moveService;
+    private final ElevatorGoalService goalService;
 
     @Override
     public List<Elevator> createElevators(int numOfElevators) {
@@ -71,42 +68,8 @@ public class ElevatorServiceImpl implements ElevatorService {
     @Override
     public void addElevatorGoals(List<Elevator> elevators, List<Person> needsService) {
         for (Person person : needsService) {
-            tryToServe(elevators, person);
+            goalService.tryToServe(elevators, person);
         }
-    }
-
-    private void tryToServe(List<Elevator> elevators, Person person) {
-        List<Elevator> noDestination = destinationService.findElevatorWithNoDestinations(elevators);
-        List<Elevator> personOnTheWayMovingSameDirection = destinationService.onWayToDestinationMovingSameDirection(
-                elevators,
-                person.getCurrentFloorNumber(),
-                person.getDirection()
-        );
-
-        personOnTheWayMovingSameDirection = destinationService.lessThanMaxDestinations(personOnTheWayMovingSameDirection);
-
-        noDestination = distanceService.canServeByDistance(noDestination, person.getCurrentFloorNumber());
-        personOnTheWayMovingSameDirection = distanceService.canServeByDistance(personOnTheWayMovingSameDirection, person.getCurrentFloorNumber());
-
-        noDestination = stateService.stoppedOrClosing(noDestination);
-        personOnTheWayMovingSameDirection = stateService.ifSameFloorClosedOrOpening(personOnTheWayMovingSameDirection, person.getCurrentFloorNumber());
-
-        chooseBestElevator(noDestination, personOnTheWayMovingSameDirection).ifPresentOrElse(
-                elevator -> {
-                    destinationService.addElevatorDestinationToGrabPerson(elevator, person.getCurrentFloorNumber());
-                    person.setNeedService(false);
-                },
-                () -> {
-                }
-        );
-    }
-
-    private Optional<Elevator> chooseBestElevator(List<Elevator> noDestination, List<Elevator> personOnTheWayMovingSameDirection) {
-        // Todo: add more logic to choose best elevator
-        if (noDestination.isEmpty() && personOnTheWayMovingSameDirection.isEmpty())
-            return Optional.empty();
-
-        return Optional.of(noDestination.get(0));
     }
 
     private void kickPeopleOffElevator(Elevator elevator) {
