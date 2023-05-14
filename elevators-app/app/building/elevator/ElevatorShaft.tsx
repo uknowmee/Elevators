@@ -14,17 +14,17 @@ function ElevatorShaft({ numOfFloors, id }: ElevatorShaftProps) {
   const elevator = useSimulationStore(state => state.elevators).find(elevator => elevator.serialNumber === id);
   const info = (): String => {
     switch (elevator?.state) {
-      case ElevatorState.STOPPED: return "stop";
-      case ElevatorState.MOVING: return "move";
-      case ElevatorState.OPENING: return "open";
-      case ElevatorState.CLOSING: return "close";
+      case ElevatorState.STOPPED: return "stopped";
+      case ElevatorState.MOVING: return "moving";
+      case ElevatorState.OPENING: return "opening";
+      case ElevatorState.CLOSING: return "closing";
       case ElevatorState.ENTERING_EXITING: return "in/out";
       default: return "";
     }
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "65px"}}>
       {
         Array.from(
           { length: numOfFloors + 1 }, (_, index) => (

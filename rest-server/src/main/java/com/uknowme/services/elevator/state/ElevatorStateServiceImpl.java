@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ElevatorStateServiceImpl implements ElevatorStateService{
+public class ElevatorStateServiceImpl implements ElevatorStateService {
 
     private final ElevatorDestinationService destinationService;
     private final ElevatorMoveService moveService;
@@ -27,9 +27,8 @@ public class ElevatorStateServiceImpl implements ElevatorStateService{
     @Override
     public List<Elevator> ifSameFloorClosedOrOpening(List<Elevator> noDestination, int currentFloorNumber) {
         return noDestination.stream()
-                .filter(elevator ->
-                        elevator.getCurrentFloor() == currentFloorNumber &&
-                                (elevator.getState() == ElevatorState.CLOSING || elevator.getState() == ElevatorState.OPENING)
+                .filter(elevator -> elevator.getCurrentFloor() != currentFloorNumber
+                        || (elevator.getState() == ElevatorState.STOPPED || elevator.getState() == ElevatorState.OPENING)
                 )
                 .toList();
     }
