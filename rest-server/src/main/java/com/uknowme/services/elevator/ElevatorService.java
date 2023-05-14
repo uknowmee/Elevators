@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface ElevatorService {
 
-    List<Elevator> createElevators(int numOfElevators);
-
     void validateNumberOfElevators(int numOfElevators) throws ElevatorValidationServiceException;
 
     void getPeopleOffElevators(List<Elevator> elevators);
@@ -18,7 +16,9 @@ public interface ElevatorService {
 
     void changeStateOfElevators(List<Elevator> elevators);
 
+    void moveElevators(List<Elevator> elevators);
+
     List<Elevator> getElevatorsReadyForEntering(List<Elevator> elevators);
 
-    void moveElevators(List<Elevator> elevators);
+    List<Elevator> createElevators(int numOfElevators);
 }

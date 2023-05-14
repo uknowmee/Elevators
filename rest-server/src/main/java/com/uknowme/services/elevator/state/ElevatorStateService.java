@@ -6,10 +6,6 @@ import com.uknowme.domain.elevator.ElevatorState;
 import java.util.List;
 
 public interface ElevatorStateService {
-    boolean notMoving(Elevator elevator);
-
-    boolean isEnteringExiting(Elevator elevator);
-
     void checkNextStateFromStopped(Elevator elevator);
 
     void checkNextStateFromMoving(Elevator elevator);
@@ -19,6 +15,8 @@ public interface ElevatorStateService {
     void checkNextStateFromClosing(Elevator elevator);
 
     void checkNextStateFromEnteringExiting(Elevator elevator);
+
+    boolean isEnteringExiting(Elevator elevator);
 
     List<Elevator> stoppedOrClosing(List<Elevator> noDestination);
 

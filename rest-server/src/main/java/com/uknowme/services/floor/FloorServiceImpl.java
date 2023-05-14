@@ -14,6 +14,9 @@ import java.util.stream.IntStream;
 @Service
 public class FloorServiceImpl implements FloorService {
 
+    private static final int MIN_FLOOR_NUMBER = 8;
+    private static final int MAX_FLOOR_NUMBER = 17;
+
     @Override
     public List<Floor> createFloors(int numOfFloors) {
 
@@ -25,7 +28,7 @@ public class FloorServiceImpl implements FloorService {
 
     @Override
     public void validateNumberOfFloors(int numOfFloors) throws FloorServiceException {
-        if (numOfFloors < 8 || numOfFloors > 17)
+        if (numOfFloors < MIN_FLOOR_NUMBER || numOfFloors > MAX_FLOOR_NUMBER)
             throw new FloorServiceException(
                     FloorServiceErrorCode.INVALID_NUMBER_OF_FLOORS,
                     HttpStatus.BAD_REQUEST,

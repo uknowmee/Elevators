@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FloorService {
 
-    List<Floor> createFloors(int numOfFloors);
-
     void validateNumberOfFloors(int numOfFloors) throws FloorServiceException;
+
+    List<Floor> createFloors(int numOfFloors);
 }

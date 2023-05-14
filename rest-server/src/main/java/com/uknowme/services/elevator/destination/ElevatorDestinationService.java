@@ -8,13 +8,13 @@ import java.util.List;
 public interface ElevatorDestinationService {
     void addElevatorDestinationToGrabPerson(Elevator elevator, int floorNumber);
 
-    int getNextDestination(Elevator elevator);
-
     void removeReachedDestinations(Elevator elevator);
 
-    boolean isAnyDestinationReached(Elevator elevator);
-
     void addElevatorDestinationToDeliverPerson(Elevator elevator, int desiredFloorNumber);
+
+    int getNextDestination(Elevator elevator);
+
+    boolean isAnyDestinationReached(Elevator elevator);
 
     boolean isAnyDestinationReachedNextStep(Elevator elevator);
 

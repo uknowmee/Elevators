@@ -34,11 +34,6 @@ public class ElevatorStateServiceImpl implements ElevatorStateService {
     }
 
     @Override
-    public boolean notMoving(Elevator elevator) {
-        return elevator.getState() != ElevatorState.MOVING;
-    }
-
-    @Override
     public void checkNextStateFromClosing(Elevator elevator) {
         elevator.setState(ElevatorState.STOPPED);
     }

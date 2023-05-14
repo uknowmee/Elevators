@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonValidationServiceImpl implements PersonValidationService{
 
+    private static final int START_FLOOR_NUMBER = 0;
+
     @Override
     public void checkDifferent(int startFloorNumber, int desiredFloorNumber) {
         if (startFloorNumber == desiredFloorNumber)
@@ -19,7 +21,7 @@ public class PersonValidationServiceImpl implements PersonValidationService{
 
     @Override
     public void validateStartFloorNumber(int startFloorNumber, Building building) throws PersonValidationServiceException {
-        if (startFloorNumber < 0 || startFloorNumber > building.getNumOfFloors())
+        if (startFloorNumber < START_FLOOR_NUMBER || startFloorNumber > building.getNumOfFloors())
             throw new PersonValidationServiceException(
                     PersonValidationServiceErrorCode.INVALID_START_FLOOR_NUMBER,
                     HttpStatus.BAD_REQUEST,
@@ -29,7 +31,7 @@ public class PersonValidationServiceImpl implements PersonValidationService{
 
     @Override
     public void validateDesiredFloorNumber(int desiredFloorNumber, Building building) throws PersonValidationServiceException {
-        if (desiredFloorNumber < 0 || desiredFloorNumber > building.getNumOfFloors())
+        if (desiredFloorNumber < START_FLOOR_NUMBER || desiredFloorNumber > building.getNumOfFloors())
             throw new PersonValidationServiceException(
                     PersonValidationServiceErrorCode.INVALID_DESIRED_FLOOR_NUMBER,
                     HttpStatus.BAD_REQUEST,
